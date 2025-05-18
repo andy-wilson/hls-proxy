@@ -1,0 +1,44 @@
+{
+  "listen_address": ":8080",
+  "target_host": "https://example.com",
+  "headers": {
+    "X-CDN-Auth": "test",
+    "User-Agent": "HLSProxy/1.0"
+  },
+  "rewrite_rules": [
+    {
+      "pattern": "^/local/(.*\\.m3u8)$",
+      "replacement": "/streams/$1"
+    },
+    {
+      "pattern": "^/local/(.*\\.ts)$",
+      "replacement": "/segments/$1"
+    }
+  ],
+  "content_rewrites": [
+    {
+      "pattern": "https://cdn\\.example\\.com/([^\"\\s]+)",
+      "replacement": "http://localhost:8080/local/$1",
+      "content_types": ["application/vnd.apple.mpegurl", "application/x-mpegurl"],
+      "global": true
+    },
+    {
+      "pattern": "#EXT-X-MEDIA-SEQUENCE:(\\d+)",
+      "replacement": "#EXT-X-MEDIA-SEQUENCE:1",
+      "content_types": ["application/vnd.apple.mpegurl"],
+      "global": false
+    }
+  ],
+  "log_requests": true,
+  "log_responses": true,
+  "timeout": 60,
+  "tls": {
+    "enabled": false,
+    "cert_file": "server.crt",
+    "key_file": "server.key",
+    "skip_verify": false,
+    "client_cert_file": "",
+    "client_key_file": "",
+    "root_ca_file": ""
+  }
+}

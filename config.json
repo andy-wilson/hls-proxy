@@ -1,0 +1,11 @@
+{
+  "listen_address": ":8080",
+  "target_host": "https://example.com",
+  "headers": {
+    "X-CDN-Auth": "my_test_key",
+    "User-Agent": "HLSProxy/1.0"
+  },
+  "log_requests": true,
+  "log_responses": true,
+  "timeout": 10
+}
